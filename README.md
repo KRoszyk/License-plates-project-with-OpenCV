@@ -56,10 +56,23 @@ This will be useful later in processing the characters. The result is shown belo
                 result = score
                 index = i
     ```
+The results of the program is written to the json file. A fragment of the resulting file is presented below.
+  ```   
+  {
+    "tab_000.jpg": "PK89752",
+    "tab_002.jpg": "PO028EG",
+    "tab_003.jpg": "PZ25962",
+    "tab_004.jpg": "FU434FY",
+    "tab_005.jpg": "ELW05LC",
+    "tab_007.jpg": "PKA91KX",
+    "tab_009.jpg": "WP7285G",
+    "tab_011.jpg": "FG52945"
+  }
+  ```
 
 ### Summary and conclusions
 
-If you want to use this code,remember to declare parameters in the Run configurations.
+If you want to use this code, remember to declare parameters in the Run configurations.
 This code works fine, however it is about 85% efficient for character recognition from random images. If you need more, you can try to use other morphological operations from OpenCV library or convolutional neural network. 
 
 If you have any questions, just leave a comment or write to me a message. :)
