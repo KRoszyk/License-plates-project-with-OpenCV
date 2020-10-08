@@ -57,7 +57,8 @@ This will be useful later in processing the characters. The result is shown belo
                 index = i
     ```
 
-###Summary and conclusions
+### Summary and conclusions
+
 If you want to use this code,remember to declare parameters in the Run configurations.
 This code works fine, however it is about 85% efficient for character recognition from random images. If you need more, you can try to use other morphological operations from OpenCV library or convolutional neural network. 
 
