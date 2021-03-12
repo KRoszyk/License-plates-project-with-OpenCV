@@ -1,17 +1,18 @@
 import numpy as np
 import cv2 as cv
-from skimage.metrics._structural_similarity import structural_similarity as ssim
+from skimage.metrics import structural_similarity as ssim
 
 
-def perform_processing(fonts_list, image: np.ndarray) -> str:
+def perform_processing(predict_fonts: list, fonts_list, image: np.ndarray) -> str:
     # Main processing function which uses another basic functions :)
     plate_outlines, resized_image = preprocessing(image)
     trans_plate = plate_transform(plate_outlines, resized_image)
     preletters = plate_processing(trans_plate)
     letters = letters_processing(preletters, trans_plate)
-    final_result = final_processing(letters, fonts_list)
+    final_result = final_processing(predict_fonts, letters, fonts_list)
 
     return final_result
+
 
 def preprocessing(image: np.ndarray):
     # This function resizes the original image, converts it to grayscale and looks for outlines to find the license plate in the image
@@ -104,6 +105,7 @@ def plate_transform(resized, plates):
 
     return dst
 
+
 def plate_processing(dst):
     # Conversion from BGR to HSV color space to remove the blue stripe with country mark
     hsv = cv.cvtColor(dst, cv.COLOR_BGR2HSV)
@@ -189,13 +191,15 @@ def letters_processing(boxes, dst):
     # A list containing the characters prepared for a final match
     return adapt_letter
 
-def final_processing(adapt_letter, fonts_list):
+
+def final_processing(predict_fonts, adapt_letter, fonts_list):
     # Creating a list for final characters written to the JSON file
     final_list = []
     final_list.clear()
-
-    # Array of reference letters related to a function called "fonts()"
-    template = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','?']
+    template = []
+    for font in predict_fonts:
+        template.append(font[0])
+    template.append("?")
 
     # Checking the best match for the cut letters and those from the reference list
     for original in adapt_letter:
@@ -215,4 +219,3 @@ def final_processing(adapt_letter, fonts_list):
         final_list.append(template[index])
 
     return "".join(final_list)
-
